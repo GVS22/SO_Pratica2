@@ -3,20 +3,23 @@
 
 typedef enum {
     READY,
-    BLOCKED,
-    RUNNING
+    RUNNING,
+    WAITING,
+    TERMINATED
 } ProcessState;
 
-typedef struct {
+typedef struct PCB {
     int id;
     ProcessState state;
     int priority;
-    int remaining_time;
-    int base_address;
-    int limit_address;
+    int completed;
+    double start_time;
+    double end_time;
+    double stage_times[5]; 
+    double total_execution_time;
 } PCB;
 
-PCB* create_pcb(int id, int priority, int remaining_time);
+PCB* create_pcb(int id, ProcessState state, int priority, int completed, double start_time);
 void destroy_pcb(PCB* pcb);
 
-#endif
+#endif // PCB_H

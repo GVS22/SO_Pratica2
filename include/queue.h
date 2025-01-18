@@ -3,20 +3,18 @@
 
 #include "pcb.h"
 
-typedef struct Node {
-    PCB* process;
-    struct Node* next;
-} Node;
-
-typedef struct {
-    Node* front;
-    Node* rear;
+typedef struct Queue {
+    PCB* processes[256];
+    int front;
+    int rear;
 } Queue;
 
+// Declaração de `ready_queue` como uma variável global externa
+extern Queue* ready_queue;
+
 Queue* create_queue();
+void destroy_queue(Queue* queue);
 void enqueue(Queue* queue, PCB* process);
 PCB* dequeue(Queue* queue);
-int is_empty(Queue* queue);
-void destroy_queue(Queue* queue);
 
-#endif
+#endif // QUEUE_H

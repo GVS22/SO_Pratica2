@@ -1,22 +1,24 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "pcb.h"
 
-PCB* create_pcb(int id, int priority, int remaining_time) {
+PCB* create_pcb(int id, ProcessState state, int priority, int completed, double start_time) {
     PCB* pcb = (PCB*)malloc(sizeof(PCB));
     if (!pcb) {
-        perror("Erro ao criar PCB");
-        exit(EXIT_FAILURE);
+        perror("Erro ao alocar memória para PCB");
+        return NULL;
     }
     pcb->id = id;
-    pcb->state = READY;
+    pcb->state = state;
     pcb->priority = priority;
-    pcb->remaining_time = remaining_time;
-    pcb->base_address = 0;
-    pcb->limit_address = 1024; // Exemplo
+    pcb->completed = completed;
+    pcb->start_time = start_time;
+    pcb->end_time = 0.0;
+    for (int i = 0; i < 5; i++) {
+        pcb->stage_times[i] = 0.0;
+    }
     return pcb;
 }
 
 void destroy_pcb(PCB* pcb) {
-    free(pcb);
+    if (pcb) free(pcb);
 }
