@@ -1,16 +1,19 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -g -Iinclude
-SRCS = src/main.c src/pcb.c src/queue.c src/scheduler.c src/pipeline.c
-OBJS = $(SRCS:.c=.o)
-TARGET = simulador
+SRC = src/main.c src/pcb.c src/queue.c src/scheduler.c src/pipeline.c src/cache.c
+OBJ = $(SRC:.c=.o)
+BIN = simulador
 
-all: $(TARGET)
+all: $(BIN)
 
-$(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $(TARGET) -lpthread
+$(BIN): $(OBJ)
+	$(CC) $(OBJ) -o $(BIN) -lpthread
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJ) $(BIN)
 
-run: all
-	./$(TARGET)
+run: $(BIN)
+	./$(BIN)

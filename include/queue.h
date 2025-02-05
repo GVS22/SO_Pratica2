@@ -3,13 +3,15 @@
 
 #include "pcb.h"
 
+#define QUEUE_SIZE 256
+
 typedef struct Queue {
-    PCB* processes[256];
+    PCB* processes[QUEUE_SIZE];
     int front;
     int rear;
 } Queue;
 
-// Declaração de `ready_queue` como uma variável global externa
+
 extern Queue* ready_queue;
 
 Queue* create_queue();

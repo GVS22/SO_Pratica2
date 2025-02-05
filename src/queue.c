@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include "queue.h"
 
-// Definição da variável global `ready_queue`
-Queue* ready_queue = NULL;
+// Note: Não defina a variável global ready_queue aqui; ela está definida em main.c
 
 Queue* create_queue() {
     Queue* queue = (Queue*)malloc(sizeof(Queue));
@@ -11,26 +10,26 @@ Queue* create_queue() {
         perror("Erro ao criar a fila");
         return NULL;
     }
-    queue->front = -1;
-    queue->rear = -1;
+    queue->front = 0;
+    queue->rear = 0;
     return queue;
 }
 
 void destroy_queue(Queue* queue) {
-    if (queue) free(queue);
+    if (queue)
+        free(queue);
 }
 
 void enqueue(Queue* queue, PCB* process) {
-    if (queue->rear == 255) {
-        printf("Fila cheia\n");
+    if (queue->rear == QUEUE_SIZE) {
+        printf("Fila cheia\\n");
         return;
     }
-    if (queue->front == -1) queue->front = 0;
-    queue->processes[++queue->rear] = process;
+    queue->processes[queue->rear++] = process;
 }
 
 PCB* dequeue(Queue* queue) {
-    if (queue->front == -1 || queue->front > queue->rear) {
+    if (queue->front >= queue->rear) {
         return NULL;
     }
     return queue->processes[queue->front++];

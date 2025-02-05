@@ -3,10 +3,10 @@
 
 #include "pcb.h"
 
-// Declaração da função de execução do núcleo
+// Função para simular a execução do núcleo (pipeline)
 void* core_execution(void* arg);
 
-// Simulação de um estágio do pipeline
-void simulate_pipeline_stage(const char* stage, int process_id, PCB* pcb, int stage_index);
+// Função para obter o tempo atual (em segundos)
+double get_time();
 
 #endif // PIPELINE_H
